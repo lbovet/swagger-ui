@@ -385,7 +385,7 @@
     };
 
     SwaggerResource.prototype.addOperations = function(resource_path, ops, consumes, produces) {
-      var method, o, op, ref, responseMessages, type, _i, _len, _results;
+      var method, o, op, r, ref, responseMessages, type, _i, _j, _len, _len1, _results;
       if (ops) {
         _results = [];
         for (_i = 0, _len = ops.length; _i < _len; _i++) {
@@ -420,6 +420,11 @@
           }
           if (o.errorResponses) {
             responseMessages = o.errorResponses;
+            for (_j = 0, _len1 = responseMessages.length; _j < _len1; _j++) {
+              r = responseMessages[_j];
+              r.message = r.reason;
+              r.reason = null;
+            }
           }
           o.nickname = this.sanitize(o.nickname);
           op = new SwaggerOperation(o.nickname, resource_path, method, o.parameters, o.summary, o.notes, type, responseMessages, this, consumes, produces, o.authorizations);
@@ -656,7 +661,7 @@
         parameter = _ref1[_i];
         parameter.name = parameter.name || parameter.type || parameter.dataType;
         type = parameter.type || parameter.dataType;
-        if (type.toLowerCase() === 'boolean') {
+        if (typeof type !== 'undefined' && type.toLowerCase() === 'boolean') {
           parameter.allowableValues = {};
           parameter.allowableValues.values = ["true", "false"];
         }
@@ -979,18 +984,18 @@
           return _results;
         }).call(this)).length > 0) {
           type = param.type || param.dataType;
-          if ((function() {
+          if (((function() {
             var _i, _len, _ref, _results;
             _ref = this.operation.parameters;
             _results = [];
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               param = _ref[_i];
-              if ((typeof type !== 'undefined' && type.toLowerCase() === "file").length > 0) {
+              if (typeof type !== 'undefined' && type.toLowerCase() === "file") {
                 _results.push(param);
               }
             }
             return _results;
-          }).call(this)) {
+          }).call(this)).length > 0) {
             requestContentType = "multipart/form-data";
           } else {
             requestContentType = "application/x-www-form-urlencoded";
