@@ -30,7 +30,7 @@
     var typsonReady = $.Deferred();
     typsonReady.done(function () {
       window.swaggerUi = new SwaggerUi({
-      url: "/swagger/api/index.json",
+      url: "/swagger-ui/dist/api/index.json",
       dom_id: "swagger-ui-container",
       supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
       onComplete: function(swaggerApi, swaggerUi){
