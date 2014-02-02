@@ -60,7 +60,11 @@
   });
 
   </script>
-  <script src="/typson/lib/require.js" data-main="/typson/typson-swagger.js"></script>
+  <script src="/typson/vendor/require.js"></script>
+  <script>
+      requirejs.config({ baseUrl: "/typson" });
+      requirejs(["lib/typson-swagger"]);
+  </script>
 </head>
 
 <body>
